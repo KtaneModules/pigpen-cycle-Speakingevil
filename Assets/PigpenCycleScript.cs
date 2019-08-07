@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
@@ -13,7 +13,7 @@ public class PigpenCycleScript : MonoBehaviour
 
     private string[] message = new string[100] { "ADVANCED", "ADDITION", "ALLOTYPE", "ALLOTTED", "BINARIES", "BILLIONS", "BULLHORN", "BULWARKS", "CIPHERED", "CIRCUITS", "COMMANDO", "COMPILER", "DECRYPTS", "DIVISION", "DISPATCH", "DISCRETE", "ENCIPHER", "ENTRANCE", "EQUATORS", "EQUALISE", "FINISHED", "FINDINGS", "FORMULAE", "FORTUNES", "GAUNTLET", "GAMBLING", "GATEPOST", "GATEWAYS", "HAZARDED", "HAZINESS", "HUNTRESS", "HUNGRIER", "INDICATE", "INDIGOES", "ILLUSORY", "ILLUDING", "JIGSAWED", "JIMMYING", "JUNKYARD", "JUNCTURE", "KILOWATT", "KINETICS", "KNOCKING", "KNOWABLE", "LIMITING", "LINEARLY", "LINKWORK", "LINGERED", "MONOGRAM", "MONOTONE", "MULTITON", "MULCTING", "NANOGRAM", "NANOTUBE", "NUMEROUS", "NUMERATE", "OCTANGLE", "OCTUPLES", "OBSTRUCT", "OBSTACLE", "PROGRESS", "PROJECTS", "POSTSYNC", "POSITRON", "QUADRANT", "QUADRICS", "QUIRKISH", "QUITTERS", "REVERSED", "REVOLVED", "ROTATORS", "RELATIVE", "STARTING", "STANDARD", "STOCKADE", "STOCCATA", "TRIGGERS", "TRIANGLE", "TOMOGRAM", "TOMAHAWK", "UNDERRUN", "UNDERLIE", "ULTERIOR", "ULTRAHOT", "VICINITY", "VICELESS", "VOLITION", "VOLUMING", "WINGDING", "WINNABLE", "WHATNESS", "WHATSITS", "YELLOWED", "YEASAYER", "YOKOZUNA", "YOURSELF", "ZIPPERED", "ZIGZAGGY", "ZYMOLOGY", "ZYMOGENE" };
     private string[] response = new string[100] { "ENTRANCE", "KILOWATT", "YOKOZUNA", "STOCCATA", "POSITRON", "TRIGGERS", "EQUALISE", "VICELESS", "FORMULAE", "BINARIES", "POSTSYNC", "TOMAHAWK", "HAZINESS", "VOLITION", "KNOCKING", "ZIGZAGGY", "FINDINGS", "ROTATORS", "KINETICS", "ILLUSORY", "RELATIVE", "DISPATCH", "STANDARD", "DIVISION", "PROGRESS", "OBSTACLE", "JIMMYING", "ULTERIOR", "DISCRETE", "BULWARKS", "GATEWAYS", "FINISHED", "JUNKYARD", "WHATSITS", "JIGSAWED", "PROJECTS", "OCTUPLES", "NUMEROUS", "BILLIONS", "UNDERLIE", "JUNCTURE", "EQUATORS", "NUMERATE", "YOURSELF", "TRIANGLE", "UNDERRUN", "REVOLVED", "GATEPOST", "QUIRKISH", "QUITTERS", "LIMITING", "MONOGRAM", "WHATNESS", "ZIPPERED", "LINGERED", "ENCIPHER", "REVERSED", "MULTITON", "COMPILER", "MULCTING", "ZYMOGENE", "STARTING", "VOLUMING", "TOMOGRAM", "HAZARDED", "ALLOTYPE", "GAMBLING", "QUADRICS", "OBSTRUCT", "BULLHORN", "ZYMOLOGY", "NANOTUBE", "INDICATE", "CIPHERED", "OCTANGLE", "STOCKADE", "DECRYPTS", "ADDITION", "COMMANDO", "HUNTRESS", "WINGDING", "MONOTONE", "KNOWABLE", "VICINITY", "ILLUDING", "CIRCUITS", "GAUNTLET", "WINNABLE", "YEASAYER", "FORTUNES", "INDIGOES", "NANOGRAM", "LINKWORK", "QUADRANT", "HUNGRIER", "LINEARLY", "ADVANCED", "ALLOTTED", "YELLOWED", "ULTRAHOT" };
-    private string[] pigpens = new string[7] { "ACIG", "BFHD", "JLRP", "KOQM", "SUVT", "WYZX", "EN" };
+    private string[] pigpens = new string[4] { "ASCUIVGT", "BKFOHQDM", "JWLYRZPX", "EN"};
     private string[] ciphertext = new string[2];
     private string answer;
     private int[][] rot = new int[2][] { new int[8], new int[8] };
@@ -90,30 +90,30 @@ public class PigpenCycleScript : MonoBehaviour
             {
                 dialText[i].text = string.Empty;
                 rot[1][i] = rot[0][i];
-                rot[0][i] = Random.Range(0, 4);
+                rot[0][i] = Random.Range(0, 8);
                 roh[i] = rot[0][i].ToString();
-                for(int j = 0; j < 7; j++)
+                for(int j = 0; j < 4; j++)
                 {
                     if (pigpens[j].Contains(message[r][i].ToString()))
                     {
-                        if(j == 6)
+                        if(j == 3)
                         {
-                            ciph[0].Add(message[r][i].ToString());
+                            ciph[0].Add(pigpens[3][(pigpens[3].IndexOf(message[r][i]) + rot[0][i]) % 2].ToString());
                         }
                         else
                         {
-                            ciph[0].Add(pigpens[j][(pigpens[j].IndexOf(message[r][i]) + rot[0][i]) % 4].ToString());
+                            ciph[0].Add(pigpens[j % 3][(pigpens[j].IndexOf(message[r][i]) + rot[0][i]) % 8].ToString());
                         }
                     }
                     if (pigpens[j].Contains(response[r][i].ToString()))
                     {
-                        if (j == 6)
+                        if (j == 3)
                         {
-                            ciph[1].Add(response[r][i].ToString());
+                            ciph[1].Add(pigpens[3][(pigpens[3].IndexOf(response[r][i]) + rot[0][i]) % 2].ToString());
                         }
                         else
                         {
-                            ciph[1].Add(pigpens[j][(pigpens[j].IndexOf(response[r][i]) + rot[0][i]) % 4].ToString());
+                            ciph[1].Add(pigpens[j % 3][(pigpens[j].IndexOf(response[r][i]) + rot[0][i]) % 8].ToString());
                         }
                     }
                 }              
@@ -145,10 +145,10 @@ public class PigpenCycleScript : MonoBehaviour
             }
             if (spin[i] < 0)
             {
-                spin[i] += 4;
+                spin[i] += 8;
             }
         }
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 8; i++)
         {
             for (int j = 0; j < 8; j++)
             {
@@ -191,13 +191,13 @@ public class PigpenCycleScript : MonoBehaviour
                 }
                 else
                 {
-                    dials[j].transform.localEulerAngles += new Vector3(0, 0, 90);
+                    dials[j].transform.localEulerAngles += new Vector3(0, 0, 45);
                     spin[j]--;
                 }
             }
             if (i < 3)
             {
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(0.25f);
             }
         }
         if (moduleSolved == true)
