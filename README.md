@@ -1,1 +1,1 @@
-# pigpen-cycle
+#[ModKit Wiki](../../wiki)
